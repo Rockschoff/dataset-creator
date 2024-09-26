@@ -121,13 +121,13 @@ for idx, data_point in enumerate(st.session_state['data_points']):
         
         # Display CFR Search Results
         if cfr_search_results:
-            st.write("CFR Search Results:")
-            st.write(cfr_search_results[:500])
+            if st.checkbox("SHOW CFR Search Results:"):
+                st.write(cfr_search_results)
 
         # Display FDA Search Results
         if fda_search_results:
-            st.write("FDA Search Results:")
-            st.write(fda_search_results[:500])
+            if st.checkbox("SHOW FDA Search Results:"):
+                st.write(cfr_search_results)
 
         # Generate bot response
         if st.button("Generate Bot Response from LLM", key=f'generate_bot_response_{data_point["_id"]}'):
