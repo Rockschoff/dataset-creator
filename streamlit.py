@@ -9,6 +9,7 @@ from functions import get_fda_results, get_cfr_results,bot_response
 from pymongo import MongoClient
 from bson.objectid import ObjectId
 import openai  # Import OpenAI library
+from uuid import uuid4
 
 # MongoDB connection setup
 client = MongoClient(st.secrets["MONGODB_URI"])
@@ -121,12 +122,12 @@ for idx, data_point in enumerate(st.session_state['data_points']):
         
         # Display CFR Search Results
         if cfr_search_results:
-            if st.checkbox("SHOW CFR Search Results:"):
+            if st.checkbox("SHOW CFR Search Results:" , key=f"cfr search result {uuid4()}"):
                 st.write(cfr_search_results)
 
         # Display FDA Search Results
         if fda_search_results:
-            if st.checkbox("SHOW FDA Search Results:"):
+            if st.checkbox("SHOW FDA Search Results:" , key=f"cfr search result {uuid4()}"):
                 st.write(cfr_search_results)
 
         # Generate bot response
@@ -144,7 +145,7 @@ for idx, data_point in enumerate(st.session_state['data_points']):
         if st.button("Delete Data Point", key=f'delete_{data_point["_id"]}'):
             collection.delete_one({'_id': ObjectId(data_point['_id'])})
             st.session_state['data_points'].pop(idx)
-            st.experimental_rerun()
+            st.rerun()
 
 # Display the dataset
 st.header("Dataset Preview")
